@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class MovementController : MonoBehaviour
@@ -7,10 +8,18 @@ public class MovementController : MonoBehaviour
     public float moveSpeed;
     private float hInput, vInput;
 
+
     private void FixedUpdate() {
-        if (joystick == null) return;
+        Debug.Log(joystick, this);
+        if (joystick == null) {
+            Debug.Log("No existe", this);
+            return;
+                }
+        Debug.Log("Si existe", this);
         hInput = joystick.Horizontal * moveSpeed;
+        Debug.Log(hInput, this);
         vInput = joystick.Vertical * moveSpeed;
+        Debug.Log(vInput, this);
         transform.Translate(hInput, vInput, 0);
     }
 }
