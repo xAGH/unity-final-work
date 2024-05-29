@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerFollower : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class PlayerFollower : MonoBehaviour
             lastDamege = Time.time;
             Health.health --;
             if (Health.health < 0) {
-                // gameOver
+                SceneManager.LoadScene("CharacterSelector", LoadSceneMode.Single);
                 Camera.main.transform.parent = null;
                 collision.gameObject.SetActive(false);
             }
