@@ -14,11 +14,7 @@ public class PlayerFollower : MonoBehaviour
         if (player == null) return;
 
         Vector2 direction = player.transform.position - transform.position;
-        direction.Normalize();
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
         transform.Translate(speed * Time.deltaTime * direction.normalized);
-        transform.rotation = Quaternion.Euler(Vector3.forward * angle);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
