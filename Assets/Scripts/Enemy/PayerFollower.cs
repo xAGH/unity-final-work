@@ -3,16 +3,19 @@ using UnityEngine.SceneManagement;
 
 public class PlayerFollower : MonoBehaviour
 {
-    public Transform player;
+    private Transform player;
     public float speed;
     private float lastDamege;
 
-    void Awake() { lastDamege = -2f; }
-
+    void Awake() {
+        lastDamege = -2f;
+    }
 
     void Update()
     {
-        if (player == null) return;
+        if (player == null) {
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+        };
 
         Vector2 direction = player.transform.position - transform.position;
         transform.Translate(speed * Time.deltaTime * direction.normalized);
