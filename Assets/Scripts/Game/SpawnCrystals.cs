@@ -2,35 +2,18 @@ using UnityEngine;
 
 public class SpawnCrystals : MonoBehaviour
 {
-
-    private float maxY, minY, maxX, minX;
-
-    public Transform topBoundary;
-    public Transform bottomBoundary;
-    public Transform leftBoundary;
-    public Transform rightBoundary;
     public GameObject[] crystals;
-
-    void Awake()
-    {
-        maxY = topBoundary.position.y - 1; 
-        minY = bottomBoundary.position.y + 1;
-        maxX = rightBoundary.position.x - 1;
-        minX = leftBoundary.position.x + 1;
-
-        GenerateCrystals();
-    }
+    public PolygonCollider2D polygonCollider;
 
     void GenerateCrystals() {
         GameObject parent = new();
-        int crystalsLength = crystals.Length;
         int i = 0;
-        while (i < crystalsLength) {
-            float x = Random.Range(minX, maxX);
-            float y = Random.Range(minY, maxY);
-            Vector3 position = new(x, y, 0);
+        while (i < crystals.Length) {
+            Vector2 position = RandomPointInBounds(polygonCollider.bounds, 1f);
+            Vector2 rndPointInside = polygonCollider.ClosestPoint(new Vector2(position.x, position.y));
             Collider[] intersecting = Physics.OverlapSphere(position, 1f);
-            if (intersecting.Length == 0) {
+            if (rndPointInside.x == position.x && rndPointInside.y == position.y && intersecting.Length == 0)
+            {
                 GameObject crystal = Instantiate(crystals[i], position, Quaternion.identity, parent.transform);
                 crystal.GetComponent<Renderer>().sortingLayerID = SortingLayer.NameToID("Layer 3");
                 i++;
@@ -38,4 +21,12 @@ public class SpawnCrystals : MonoBehaviour
         }
     }
 
+private Vector3 RandomPointInBounds(Bounds bounds, float scale)
+    {
+        return new Vector3(
+            Random.Range(bounds.min.x * scale, bounds.max.x * scale),
+            Random.Range(bounds.min.y * scale, bounds.max.y * scale),
+            Random.Range(bounds.min.z * scale, bounds.max.z * scale)
+        );
+    }
 }
