@@ -5,6 +5,10 @@ public class SpawnCrystals : MonoBehaviour
     public GameObject[] crystals;
     public PolygonCollider2D polygonCollider;
 
+    void Start() {
+        GenerateCrystals();
+    }
+
     void GenerateCrystals() {
         GameObject parent = new();
         int i = 0;
@@ -17,6 +21,7 @@ public class SpawnCrystals : MonoBehaviour
                 GameObject crystal = Instantiate(crystals[i], position, Quaternion.identity, parent.transform);
                 crystal.GetComponent<Renderer>().sortingLayerID = SortingLayer.NameToID("Layer 3");
                 i++;
+                crystal.SetActive(true);
             }
         }
     }

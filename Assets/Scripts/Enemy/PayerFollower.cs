@@ -29,9 +29,9 @@ public class PlayerFollower : MonoBehaviour
             lastDamege = Time.time;
             Health.health --;
             if (Health.health < 0) {
-                SceneManager.LoadScene("CharacterSelector", LoadSceneMode.Single);
                 Camera.main.transform.parent = null;
                 collision.gameObject.SetActive(false);
+                SceneManager.LoadScene("CharacterSelector", LoadSceneMode.Single);
             }
         }
         
